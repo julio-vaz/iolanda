@@ -5,8 +5,9 @@ from urllib.parse import urlparse
 import feedparser
 import requests
 import newspaper
+from ffmpy import FFmpeg
 
-feed = feedparser.parse('http://feeds.feedburner.com/vice/AprM')
+feed = feedparser.parse('http://feeds.feedburner.com/iolandachannel')
 chapters = []
 
 for entry in feed['entries']:
@@ -31,15 +32,19 @@ for entry in feed['entries']:
     text = article.text
     tts = gTTS(text=text, lang='pt', slow=False)
     tts.save("article.mp3")
-    command = 'ffmpeg -y -loop 1 -r 1'
+    inputs = {
+        'article.mp3': None,
+    }
     for image in images:
-        command += f' -i {image}'
-    command += '  -i article.mp3 -acodec copy -shortest -qscale 5 article.avi'
-    print(command)
-    subprocess.call(command, shell=True)
+        inputs[image] = None
+    ff = FFmpeg(inputs=inputs, outputs={'article.avi': '-y'})
+    print(ff.cmd)
+    ff.run()
     command = f'youtube-upload article.avi --title "{title}"'
-    command += f' --description "{text}"'
+    command += f' --description "{text}\n\n'
+    command += f'LINK PARA A NOTÍCIA ORIGINAL: {news_link}"'
     subprocess.call(command, shell=True)
     print(f'Article parsed: {title}')
+    import sys; sys.exit()
 
 print('That\'s all folks!')

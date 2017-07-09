@@ -3,3 +3,4 @@ Newspaper3k
 requests
 google-api-python-client
 progressbar2
+ffmpy
