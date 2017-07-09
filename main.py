@@ -2,7 +2,6 @@ import subprocess
 import os
 import shutil
 from urllib.parse import urlparse
-from util import clean_unicode
 import feedparser
 import requests
 import newspaper
@@ -19,7 +18,6 @@ for entry in feed['entries']:
     article.parse()
     media = article.top_img
     if not media:
-        import pdb; pdb.set_trace()
         continue
     images = []
     response = requests.get(media, stream=True)
