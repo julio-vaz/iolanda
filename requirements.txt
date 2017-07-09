@@ -1,0 +1,5 @@
+feedparser
+Newspaper3k
+requests
+google-api-python-client
+progressbar2
