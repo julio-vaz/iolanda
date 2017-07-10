@@ -36,8 +36,8 @@ for entry in feed['entries']:
         'article.mp3': None,
     }
     for image in images:
-        inputs[image] = None
-    ff = FFmpeg(inputs=inputs, outputs={'article.avi': '-y'})
+        inputs[image] = '-loop 1 -r 1'
+    ff = FFmpeg(inputs=inputs, outputs={'article.avi': '-y -acodec copy -shortest -qscale 5'})
     print(ff.cmd)
     ff.run()
     command = f'youtube-upload article.avi --title "{title}"'
