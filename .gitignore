@@ -99,5 +99,9 @@ ENV/
 .mypy_cache/
 
 # Custom
+*.jpg
+*.png
+*.gif
+*.jpeg
 *.avi
 *.mp3
